@@ -1,56 +1,19 @@
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: app1
-spec:
-   ingressClassName: nginx
-   rules:
-      host: app1
-      http:
-         paths:
-         - path: /
-         backend:
-            serviceName: app1
-            servicePort: 80
-   service:
-      name: test
-   port:
-      number: 80
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app2
+  name: app1-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-   ingressClassName: nginx
-   rules:
-      host: app2
-      http:
-         paths:
-         - path: /
-         backend:
-            serviceName: app2
-            servicePort: 80
-   service:
-      name: test
-   port:
-      number: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: app3
-spec:
-   ingressClassName: nginx
-   rules:
-      host: app3
-      http:
-         paths:
-         - path: /
-         backend:
-            serviceName: app3
-            servicePort: 80
-   service:
-      name: test
-   port:
-      number: 80
+  ingressClassName: app1-ingress
+  rules:
+  - host: 192.168.56.110
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app1-service
+            port:
+              number: 80
