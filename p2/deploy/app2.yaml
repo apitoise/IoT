@@ -30,7 +30,7 @@ metadata:
 spec:
   selector:
     app: app-two
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: 80
       targetPort: 8080
