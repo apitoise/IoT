@@ -1,0 +1,17 @@
+Vagrant.configure("2") do |config|
+	config.vm.box = "debian/bullseye64"
+	config.vbguest.installer_options = { allow_kernel_upgrade: true }
+	config.vm.synced_folder ".", "/vagrant", disabled: true
+	config.vm.synced_folder "../.", "/vagrant", disabled: false
+	config.vm.network "forwarded_port", guest: 80, host: 8080
+	config.vm.define "IoT" do |s|
+		s.vm.hostname = "IoT"
+		s.vm.provider "virtualbox" do |vb|
+			vb.customize ["modifyvm", :id, "--cpus", "8"]
+			vb.customize ["modifyvm", :id, "--memory", "4096"]
+			vb.customize ["modifyvm", :id, "--name", "IoT"]
+			vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+		end
+		s.vm.provision "shell", privileged: true, path: "provision.sh"
+	end
+end
