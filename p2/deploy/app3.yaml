@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-three-deploy
+  name: app-three
   labels:
-    app: app-three-deploy
+    app: app-three
 spec:
   replicas: 1
   selector:
@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-three-service
+  name: app-three
 spec:
   selector:
     app: app-three
@@ -34,24 +34,3 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: app-three-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: traefik
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app-three-service
-                port:
-                  number: 80
-
