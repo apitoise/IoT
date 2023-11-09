@@ -43,7 +43,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: app-three-ingress
+  ingressClassName: traefik
   rules:
     - http:
         paths:

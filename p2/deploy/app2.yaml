@@ -43,7 +43,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: app-two-ingress
+  ingressClassName: traefik
   rules:
   - host: app2.com
     http:
