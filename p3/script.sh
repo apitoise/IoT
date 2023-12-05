@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 
-
 k3d cluster delete yacht-cluster
 
 echo "Creating cluster..."
@@ -21,10 +20,9 @@ kubectl -n argocd patch secret argocd-secret -p '{"stringData":  {
     "admin.passwordMtime": "'$(date +%FT%T%Z)'"
   }}'
 
-kubectl apply -f project.yaml -n argocd
 kubectl apply -f app.yaml -n argocd
 
-echo "To access ArgoCD, launch: \"kubectl port-forward -n argocd svc/argocd-server 8080:443 &\""
-echo "To access App, launch: \"kubectl port-forward -n dev svc/app-service 8888:8888 &\"\n"
+echo "To access ArgoCD, launch: \"sudo kubectl port-forward -n argocd svc/argocd-server 8080:443 &\""
+echo "To access App, launch: \"sudo kubectl port-forward -n dev svc/app-service 8888:8888 &\"\n"
 echo "Access to ArgoCD: https://localhost:8080\nusername: admin\npassword: user42\n"
 echo "Access to App: http://localhost:8888"
